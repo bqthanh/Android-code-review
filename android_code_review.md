@@ -1,67 +1,62 @@
-#Androidコーディング規則
+#Android Coding convention
 
-1. 
+### 1. Naming convention
 
-**アプリケーション名**：UpperCamelCase
+| Type           | Style       |
+| :------------- | :------------ |
+| Application name | UpperCamelCase |
+| Project name  | UpperCamelCase |
+| Package name  | All lowercase |
+| Class name    | UpperCamelCase  |
+| Method name   | lowerCamelCase  |
+| Variable      | lowerCamelCase<br/> + A property name that is neither public nor static begins with m<br/> + A static property name starts with s|
+| Constant  | Use capital letters and underscores only |
 
-**プロジェクト名**：UpperCamelCase
+### 2. File naming
 
-**クラス名**：UpperCamelCase
+### 2.1 Class files
+Class names are written in UpperCamelCase. 
+For classes that extend an Android component, the name of the class should end with the name of the component; for example: SignInActivity, SignInFragment, ImageUploaderService, ChangePasswordDialog.
 
-**パッケージ名**
+### 2.2 Drawable files
+| Assets Type   | Prefix        | Example        |
+| :--------     | :--------     | :--------      |
+| Action bar    | ab_           | ab\_stacked.png         |
+| Button        | btn_          | btn\_ok.png             |
+| Dialog        | dialog_       | dialog\_confirm.png     |
+| Divider       | divider_      | divider\_horizontal.png |
+| Icon          | ic_           | ic\_star.png            |
+| Menu          | menu_         | menu\_submenu\_bg.png   |
+| Notification  | notification_ | notification\_bg.png    |
+| Tabs          | tab_          | tab\_pressed.png        |
 
-- すべて小文字
-- ファイル・クラス名：UpperCamelCase
+#### Selector states
+| State     | Suffix        | Example     |
+| :-------- | :--------     | :--------   |
+| Normal    | \_normal      |  btn\_order\_normal.png   |
+| Pressed   | \_pressed     |  btn\_order\_pressed.png  |
+| Focussed  | \_focused     |  btn\_order\_focused.png  |
+| Disabled  | \_disabled    |  btn\_order\_disabled.png |
+| Selected  | \_selected    |  btn\_order\_selected.png |
 
-**メソッド名**：lowerCamelCase
-
-**プロパティ名・変数名**
-
-- lowerCamelCase
-- アンダースコア(_)やドル記号(＄)で初めてはいけない
-- publicではなく、staticでもないプロパティ名は、mで始める
-- staticなプロパティ名は、sで始める
-- メソッド中のprivateな変数には、mを付けない
-
-### 定数名
-| 用途     | 接頭辞        | 
-| :-------- | :--------     |
-| Intentのaction    | ACTION_       |
-| Permission    | PERMISSION_       |
-| BundleやIntentのフィールド名    | EXTRA_(型名)_ |
-
-
-### Drawale files
-| Assets Type   | Prefix        | Example                |
-| :--------     | :--------     | :--------              |
-| Action bar    | ab_           |  ab_stacked.png        |
-| Button        | btn_          |  btn_ok.png            |
-| Dialog        | dialog_       | dialog_confirm.png     |
-| Divider       | divider_      | divider_horizontal.png |
-| Icon          | ic_           | ic_star.png            |
-| Menu          | menu_         | menu_submenu_bg.png    |
-| Notification  | notification_ | notification_bg.png    |
-| Tabs          | tab_          | tab_pressed.png        |
-
-### Selector states
-| State     | Suffix        | Example                 |
-| :-------- | :--------     | :--------               |
-| Normal    | _normal       |  btn_order_normal.png   |
-| Pressed   | _pressed      |  btn_order_pressed.png  |
-| Focussed  | _focused      |  btn_order_focused.png  |
-| Disabled  | _disabled     |  btn_order_disabled.png |
-| Selected  | _selected     |  btn_order_selected.png |
-
-### Layout files
+### 2.3 Layout files
 | Component  |  Class name  |  Layout name  |
-| :--------  | :--------     | :--------               |
-| Activity   | UserProfileActivity |  activity_user_profile.xml  |
-| Fragment   | SignUpFragment      |  fragment_sign_up.xml  |
-| Dialog     | ChangePasswordDialog      |  dialog_change_password.xml  |
-| AdapterView item |   ...   |  item_person.xml |
-| Partial layout   | _selected     |  partial_stats_bar.xml |
+| :--------  | :--------    | :--------     |
+| Activity   | UserProfileActivity |  activity\_user\_profile.xml  |
+| Fragment   | SignUpFragment      |  fragment\_sign\_up.xml  |
+| Dialog     | ChangePasswordDialog  |  dialog\_change\_password.xml  |
+| AdapterView item | ...   |  item\_person.xml |
+| Partial layout   | ...   |  partial\_stats\_bar.xml |
 
+### 3. Resource naming
 
+### ID naming
+|   Element  | Prefix    |
+| :--------  | :-------- |
+| TextView   |  text_    |
+| ImageView  |  image_   |
+| Button     |  button_  |
+| Menu       |  menu_    |
 
 ### String
 | Prefix    |  Description  |
@@ -72,46 +67,38 @@
 | action_   |  An action such as "Save" or "Create"  |
 
 
-### Resources naming
-|   Element  | Prefix    |
-| :--------  | :-------- |
-| TextView   |  text_    |
-| ImageView  |  image_   |
-| Button     |  button_  |
-| Menu       |  menu_    |
+### 3. Package structure
 
-
-### フォルダパッケージ構成
-controller（直接的にViewを持たない処理）
-
-- provider（通信処理を管理）
-- util（その他の処理）
-
-model（POJOやenumを管理）
-
-- pojo（画面名かDBの構成によって更に子フォルダを作成する）
-- enumerate（enumを管理）
-- system（アプリ自体の情報を保持するクラスを管理するex:AppConfig.java,Constants.java）
-
-
-view（layoutファイルと関連付けられるもの・viewcontrollerを管理）
+ui
 
 - activity
-- adapter
 - fragment
+- dialog
 - widget
+- adapter
+
+controller
+
+- provider
+- util
+
+data
+
+- remote
+- local
+- model
+- system: ex:AppConfig.java,Constants.java
 
 
-・コメントが十分
+#### Source block
+- Comments are enough
+- Block of the source code is sufficiently small
+- Exception handling is sufficient
+- Implement logic that can pass through all businesses
+- Declare Permission adequately and do not declare affordable Permission
+- Use latest and stable version libraries and automatic build system
 
-2. ソースコードロジック
-・スーソコードのBlockが十分に小さい
-・例外処理が十分
-・全てのビジネスを通過出来るロジックを実施する
-・Permissionを十分に宣言するし、余裕なPermissionを宣言しない
-・最新で安定バージョンのライブラリ、自動ビルドシステムを使用する
-
-3. その他
-・スースコード構築が良いか悪いか
-・フローデザインと潜在的リスク
-・メモリに関する効果的に利用しているか、メモリーリークしないように確認する
+#### Others
+- Whether the source code construction is good or bad
+- Flow design and potential risk
+- Make sure that you are effectively using memory and do not leak memory
