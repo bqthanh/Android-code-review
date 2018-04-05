@@ -3,17 +3,19 @@
 
 ## I. Coding conventions
 
-### 1. Project guidelines 
+### 1. Project guidelines
 
 ### 1.1 Package structure
 
 ui
 
+- base
 - activity
 - fragment
 - dialog
 - widget
 - adapter
+- animation
 
 controller
 
@@ -26,6 +28,12 @@ data
 - local
 - model
 - system: ex:AppConfig.java,Constants.java
+
+service
+
+receiver
+
+App.java
 
 
 ### 1.2 File naming
@@ -93,9 +101,9 @@ Naming conventions for selector states:
 Similar to layout files, menu files should match the name of the component. For example, if we are defining a menu file that is going to be used in the `UserActivity`, then the name of the file should be `activity_user.xml`
 
 
-## 2. Code guidelines
+### 2. Code guidelines
 
-### 2.1 Javadoc
+#### 2.1 Javadoc
 
 Javadoc only requires a '/\*\*' at the start and a '*/' at the end. In addition to this, use a single star on each additional line:
 
@@ -112,9 +120,9 @@ public int method(String p1) { ... }
 /** An especially short bit of Javadoc. */
 ```
 
-### 2.2 Exception handling
+#### 2.2 Exception handling
 
-#### 2.2.1 Clean up Resources in a Finally Block or Use a Try-With-Resource Statement.
+##### 2.2.1 Clean up Resources in a Finally Block or Use a Try-With-Resource Statement.
 
 A common mistake in these situations is to close the resource at the end of the try block.
 
@@ -183,7 +191,7 @@ public void automaticallyCloseResource() {
 }
 ```
 
-#### 2.2.2 Prefer Specific Exceptions
+##### 2.2.2 Prefer Specific Exceptions
 
 Always try to find the class that fits best to your exceptional event, e.g. throw a NumberFormatException instead of an IllegalArgumentException. And avoid throwing an unspecific Exception.
 
@@ -193,7 +201,7 @@ public void doNotDoThis() throws Exception { ... }
 public void doThis() throws NumberFormatException { ... }
 ```
 
-#### 2.2.3 Document the Exceptions You Specify
+##### 2.2.3 Document the Exceptions You Specify
 
 ``` java
 /**
@@ -205,7 +213,7 @@ public void doThis() throws NumberFormatException { ... }
 public void doSomething(String input) throws MyBusinessException { ... }
 ```
 
-#### 2.2.4 Throw Exceptions With Messages Messages
+##### 2.2.4 Throw Exceptions With Messages Messages
 
 If you throw a specific exception it's class name will most likely already describe the kind of error. There for it's message only needs to provide the input string that caused the problem.
 
@@ -217,7 +225,7 @@ try {
 }
 ```
 
-#### 2.2.5 Don't catch Throwable
+##### 2.2.5 Don't catch Throwable
 
 Throwable is the superclass of all exceptions and errors. You can use it in a catch clause, but you should never do it!
 
@@ -231,7 +239,7 @@ public void doNotCatchThrowable() {
 }
 ```
 
-#### 2.2.6 Don’t ignore exceptions
+##### 2.2.6 Don’t ignore exceptions
 
 ``` java
 public void doNotIgnoreExceptions() {
@@ -258,7 +266,7 @@ public void logAnException() {
 }
 ```
 
-#### 2.2.7 Don’t log and throw
+##### 2.2.7 Don’t log and throw
 
 The below example will write multiple error messages for the same exception.
 
@@ -283,6 +291,11 @@ public void wrapException(String input) throws MyBusinessException {
 }
 ```
 
+##### 2.2.8 Null Pointer Exceptions
+
+One of the most common types of crashes that are in the wild while you develop are caused by trying to run methods on objects that are not instantiated.
+
+
 ### 2.3 Java style rules
 
 #### 2.3.1 Fields definition and naming
@@ -290,9 +303,9 @@ public void wrapException(String input) throws MyBusinessException {
 Fields should be defined at the __top of the file__ and they should follow the naming rules listed below.
 
 * Non-public, non-static field names start with __m__.
-* Private, static field names start with __s__.
+* Static field names start with __s__.
 * Other fields start with a lower case letter.
-* Static final fields (constants) are ALL\_CAPS\_WITH\_UNDERSCORES.
+* Public static final fields (constants) are ALL\_CAPS\_WITH\_UNDERSCORES.
 
 Example:
 
@@ -390,31 +403,26 @@ Unlike the rest of resources, style names are written in __UpperCamelCase__.
 
 #### 1. Coding conventions
 
-Do code follow coding conventions ?
+- Do code follow coding conventions
+- Keep my classes and methods as small as possible
 
-#### 2. Logic errors
+#### 2. Well-designed
 
-It doesn’t matter how experienced you are, you can always have logic errors. That’s why it is good to understand and check all the conditions of the code that you are reading.
+One of the trickiest part of Android development is to keep simplified layouts and stick to what the design team have designed. It is important to pay attention to the amount of views and nested views used to keep the layout simple without compromising what was designed.
 
-#### 3. Null Pointer Exceptions
+![](https://cdn-images-1.medium.com/max/1600/1*6p6Q1lY1xH3rNdEvKKWKUA.png)
 
-One of the most common types of crashes that are in the wild while you develop are caused by trying to run methods on objects that are not instantiated.
-
-#### 4. Code Reuse
+#### 3. Code reuse
 
 The truth is that by reusing code we contribute to keep the app’s code simpler and avoid having new crashes on production.
 
 ![](https://cdn-images-1.medium.com/max/1600/1*-nhSONLZxx0wcOsr20KULw.png)
 
-#### 5. Save the App's State
+#### 4. Catch all possible exceptions
 
-One of the things we tend to forget is saving the app’s state and when that happens (after switching between apps, getting the app killed or rotating the phone) we loose the state of what the user was doing. So, this is something to take into account when reviewing code.
+#### 5. Logic errors
 
-#### 6. Simplified Layout
-
-One of the trickiest part of Android development is to keep simplified layouts and stick to what the design team have designed. It is important to pay attention to the amount of views and nested views used to keep the layout simple without compromising what was designed.
-
-![](https://cdn-images-1.medium.com/max/1600/1*6p6Q1lY1xH3rNdEvKKWKUA.png)
+It doesn’t matter how experienced you are, you can always have logic errors. That’s why it is good to understand and check all the conditions of the code that you are reading.
 
 #### 6. Dimens, Strings and Constants
 
@@ -428,15 +436,44 @@ Although it is obvious, not everyone speaks the same language around the globe.
 
 Next time you check some pull requests take into account the languages that your app supports and make sure you are providing accurate translations for each of them.
 
+#### 8. Save the App's State
 
+One of the things we tend to forget is saving the app’s state and when that happens (after switching between apps, getting the app killed or rotating the phone) we loose the state of what the user was doing. So, this is something to take into account when reviewing code.
 
+#### 9. Avoid Memory leaks
 
-- Exception handling is sufficient
-- Block of the source code is sufficiently small
-- Implement logic that can pass through all businesses
-- Declare Permission adequately and do not declare affordable Permission
-- Use latest and stable version libraries and automatic build system
+**Leak memory** meaning you keep a reference to it thus preventing the GC from collecting it.
 
-- Whether the source code construction is good or bad
-- Flow design and potential risk
-- Make sure that you are effectively using memory and do not leak memory
+> **The Memory Profiler** is a component in the Android Profiler that helps you identify memory leaks and memory churn that can lead to stutter, freezes, and even app crashes.
+
+##### 9.1 Do not keep long-lived references to a context-activity
+
+Never hold the reference of ui specific object in a background task, as it leads to memory leak.
+
+Do not use static views as it is always available, static views never get killed.
+
+>**Note:** A reference to an activity should have the same life cycle as the activity itself.
+
+##### 9.2 Try using the context-application instead of a context-activity
+
+##### 9.3 Never forget to say goodbye to listeners after being served
+
+Do not forget to unregister your listeners in onPause/ onStop/ onDestroy method. By not unregistering, it always keeps the activity alive and keeps waiting for listeners.
+
+##### 9.4 Avoid non-static inner classes in an activity
+
+If you don't control their life cycle, use a static inner class and make a weak reference to the activity inside. The solution to this issue is to use a static inner class with a WeakReference to the outer class, as done in ViewRoot and its W inner class for instance
+
+##### 9.5 A garbage collector is not an insurance against memory leaks
+
+##### 9.6 Using views in collection
+
+Avoid putting views in collections that do not have clear memory pattern. For example using a WeakHashMap store views as values. Since WeakHashMap store views as a hard reference it is better to avoid using it.
+
+#### 10. Avoid requesting unnecessary permissions
+
+#### 11. Add build dependencies
+
+Using latest and stable version libraries and automatic build system
+
+#### 12. Improve Your Code with Lint
