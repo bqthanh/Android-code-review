@@ -7,6 +7,8 @@
 
 ### 1.1 Package structure
 
+I think you should the below package structure.
+
 ui
 
 - base
@@ -24,7 +26,7 @@ controller
 
 data
 
-- remote
+- remote / network
 - local
 - model
 - system: ex:AppConfig.java,Constants.java
@@ -213,7 +215,7 @@ public void doThis() throws NumberFormatException { ... }
 public void doSomething(String input) throws MyBusinessException { ... }
 ```
 
-##### 2.2.4 Throw Exceptions With Messages Messages
+##### 2.2.4 Throw Exceptions With Messages
 
 If you throw a specific exception it's class name will most likely already describe the kind of error. There for it's message only needs to provide the input string that caused the problem.
 
@@ -320,9 +322,9 @@ public class MyClass {
 }
 ```
 
-### 2.3 XML style rules
+### 2.4 XML style rules
 
-#### 2.3.1 Use self closing tags
+#### 2.4.1 Use self closing tags
 
 When an XML element doesn't have any contents, you __must__ use self closing tags.
 
@@ -346,11 +348,11 @@ This is __bad__ :
 </TextView>
 ```
 
-### 2.3.2 Resources naming
+#### 2.4.2 Resources naming
 
 Resource IDs and names are written in __lowercase_underscore__.
 
-#### 2.3.2.1 ID naming
+#### 2.4.2.1 ID naming
 
 IDs should be prefixed with the name of the element in lowercase underscore. For example:
 
@@ -381,7 +383,7 @@ Menu example:
 </menu>
 ```
 
-#### 2.3.2.2 Strings
+#### 2.4.2.2 Strings
 
 String names start with a prefix that identifies the section they belong to. For example `registration_email_hint` or `registration_name_hint`. If a string __doesn't belong__ to any section, then you should follow the rules below:
 
@@ -394,7 +396,7 @@ String names start with a prefix that identifies the section they belong to. For
 | `action_`          | An action such as "Save" or "Create"  |
 
 
-#### 2.3.2.3 Styles and Themes
+#### 2.4.2.3 Styles and Themes
 
 Unlike the rest of resources, style names are written in __UpperCamelCase__.
 
@@ -476,4 +478,4 @@ Avoid putting views in collections that do not have clear memory pattern. For ex
 
 Using latest and stable version libraries and automatic build system
 
-#### 12. Improve Your Code with Lint
+#### 12. Improve your code with Lint
